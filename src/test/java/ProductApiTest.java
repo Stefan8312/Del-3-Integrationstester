@@ -16,10 +16,8 @@ public class ProductApiTest {
                 .get("https://fakestoreapi.com/products");
 
         int statusCode = response.getStatusCode();
-
         System.out.println("Status code: " + statusCode);
 
-        // OBS! Lokalt borde det ge 200, men på GitHub Actions kan det ge 403
-        assertEquals(200, statusCode, "Förväntad statuskod 200 vid lokalt körning");
+        assertEquals(200, statusCode);
     }
 }
