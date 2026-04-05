@@ -55,7 +55,8 @@ public class ProductApiTest {
 
         List<Object> products = response.jsonPath().getList("$");
 
-        assertTrue(products.size() > 0, "Produkter ska finnas");
+        // ✅ Ändrad rad: kolla exakt antal produkter
+        assertEquals(20, products.size(), "Det ska finnas exakt 20 produkter");
     }
 
     @Test
