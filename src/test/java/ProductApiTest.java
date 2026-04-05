@@ -18,8 +18,14 @@ public class ProductApiTest {
         int statusCode = response.getStatusCode();
         System.out.println("Status code: " + statusCode);
 
-        // Accept 200 (lokalt) eller 403/523 (GitHub Actions)
-        assertTrue(statusCode == 200 || statusCode == 403 || statusCode == 523,
-                "Expected 200 locally or 403/523 in GitHub Actions, but got " + statusCode);
+        if (System.getenv("GITHUB_ACTIONS") != null) {
+            // I GitHub Actions: 403 är OK, 523 kan också ske om servern är nere
+            assertTrue(statusCode == 403 || statusCode == 523,
+                    "Expected 403 (blocked) or 523 (unreachable) in GitHub Actions, got " + statusCode);
+        } else {
+            // Lokalt: 200 är OK, 523 kan ske om servern är nere
+            assertTrue(statusCode == 200 || statusCode == 523,
+                    "Expected 200 locally or 523 if server unreachable, got " + statusCode);
+        }
     }
 }
